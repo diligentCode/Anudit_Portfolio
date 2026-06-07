@@ -450,6 +450,237 @@
       </div>
     </section>
 
+    <section class="experience-section" id="experience">
+      <div class="exp-particles-container">
+        <div class="exp-ambient-orb orb-1"></div>
+        <div class="exp-ambient-orb orb-2"></div>
+        <div class="exp-ambient-orb orb-3"></div>
+      </div>
+
+      <div class="exp-container">
+        <h2 class="exp-section-title">Professional Journey</h2>
+        <p class="exp-section-subtitle">
+          A live visualization of technical evolution, network nodes, and career
+          milestones.
+        </p>
+
+        <div class="exp-timeline-wrapper">
+          <svg
+            class="exp-svg-track"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <linearGradient
+                id="expGradient"
+                x1="0%"
+                y1="0%"
+                x2="0%"
+                y2="100%"
+              >
+                <stop offset="0%" stop-color="var(--pink)" />
+                <stop offset="50%" stop-color="var(--purple)" />
+                <stop offset="100%" stop-color="var(--blue)" />
+              </linearGradient>
+
+              <filter id="expGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="6" result="coloredBlur" />
+                <feMerge>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+
+              <filter
+                id="intenseSparkGlow"
+                x="-100%"
+                y="-100%"
+                width="300%"
+                height="300%"
+              >
+                <feGaussianBlur stdDeviation="16" result="blur1" />
+                <feGaussianBlur stdDeviation="6" result="blur2" />
+                <feMerge>
+                  <feMergeNode in="blur1" />
+                  <feMergeNode in="blur2" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <path
+              class="exp-path-bg"
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.03)"
+              stroke-width="4"
+              stroke-linecap="round"
+            />
+
+            <path
+              class="exp-path-active"
+              fill="none"
+              stroke="url(#expGradient)"
+              stroke-width="4"
+              stroke-linecap="round"
+              filter="url(#expGlow)"
+            />
+
+            <g id="exp-live-spark" opacity="0">
+              <circle
+                r="40"
+                fill="var(--blue)"
+                opacity="0.15"
+                filter="url(#intenseSparkGlow)"
+              />
+              <circle
+                r="20"
+                fill="url(#expGradient)"
+                opacity="0.5"
+                filter="url(#expGlow)"
+              />
+              <circle
+                r="8"
+                fill="#ffffff"
+                filter="url(#expGlow)"
+                class="spark-core-pulse"
+              />
+              <circle r="4" fill="#ffffff" />
+              <circle
+                r="10"
+                fill="none"
+                stroke="var(--pink)"
+                stroke-width="1.5"
+                class="spark-ring-expand"
+              />
+            </g>
+          </svg>
+
+          <div class="exp-cards-container">
+            <div class="exp-card-wrapper left-aligned">
+              <div class="exp-card">
+                <div class="card-inner-glow"></div>
+                <div class="card-aurora magenta"></div>
+                <div class="card-content">
+                  <div class="card-badge">Current Engine</div>
+                  <span class="card-timeline-date">2024 — PRESENT</span>
+                  <h3 class="card-title-role">Engineering Student</h3>
+                  <h4 class="card-title-company">
+                    GH Raisoni College of Engineering
+                  </h4>
+                  <p class="card-text-description">
+                    Studying Information Technology with a focus on software
+                    development, system architecture, and computational
+                    optimization. Engaged in modern programming languages, data
+                    structures, and software engineering principles.
+                  </p>
+                  <div class="card-tags-group">
+                    <span class="tag-item">React.js</span>
+                    <span class="tag-item">Node.js</span>
+                    <span class="tag-item">Tailwind CSS</span>
+                    <span class="tag-item">System Architecture</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="exp-card-wrapper right-aligned placeholder-node">
+              <div class="exp-card">
+                <div class="card-inner-glow"></div>
+                <div class="card-aurora purple"></div>
+                <div class="card-content">
+                  <div class="card-badge placeholder-badge">
+                    Incoming Data Block
+                  </div>
+                  <span class="card-timeline-date">FUTURE MILESTONE</span>
+                  <h3 class="card-title-role">
+                    Kuch to bhi Likhunga future me...
+                  </h3>
+                  <h4 class="card-title-company">
+                    Information to be updated soon
+                  </h4>
+                  <p class="card-text-description">
+                    Pata nhi kya likhna hai yaha par. Future milestone ke data
+                    ke aane par hi update hoga. Abhi ke liye waffels waffles
+                    waffles waffles waffles
+                  </p>
+                  <div class="card-tags-group">
+                    <span class="tag-item placeholder-tag">Data Lock</span>
+                    <span class="tag-item placeholder-tag"
+                      >Evolution Cycle</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="exp-card-wrapper left-aligned placeholder-node">
+              <div class="exp-card">
+                <div class="card-inner-glow"></div>
+                <div class="card-aurora blue"></div>
+                <div class="card-content">
+                  <div class="card-badge placeholder-badge">
+                    Incoming Data Block
+                  </div>
+                  <span class="card-timeline-date">Rametade</span>
+                  <h3 class="card-title-role">Rametade Loading...</h3>
+                  <h4 class="card-title-company">hmmmmmmmmmm</h4>
+                  <p class="card-text-description">
+                    Rametade Rametade Namaka Namaka, Rametade Rametade Namaka
+                    Namaka , Rametade Rametade Namaka Namaka , Rametade Rametade
+                    Namaka Namaka , Rametade Rametade Namaka Namaka .
+                  </p>
+                  <div class="card-tags-group">
+                    <span class="tag-item placeholder-tag">Data Lock</span>
+                    <span class="tag-item placeholder-tag"
+                      >Thanks itna padhne ke liye</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-transition-glow"></div>
+    <footer class="contact-footer">
+      <div class="footer-grid-bg"></div>
+      <div class="footer-content-wrapper">
+        <div class="footer-brand">
+          <span class="footer-logo">AJ</span>
+          <p class="footer-tagline">
+            Crafting immersive digital experiences through clean architecture
+            and optimized computation.
+          </p>
+        </div>
+
+        <div class="footer-links-container">
+          <div class="footer-nav-col">
+            <h4>Navigate</h4>
+            <a href="#home">Home</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#experience">Experience</a>
+          </div>
+          <div class="footer-nav-col">
+            <h4>Connect</h4>
+            <a href="#" class="email-btn">Email Me</a>
+            <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+            <a href="https://github.com/" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-copyright-bar">
+        <p>
+          &copy; 2026 Anudit Jangid. Built with high performance logic. All
+          Rights Reserved.
+        </p>
+        <p class="ghrce-tag">GHRCE IT Branch • Portfolio Node</p>
+      </div>
+    </footer>
+
     <div class="cursor-dot"></div>
     <div class="cursor-ring"></div>
   </body>

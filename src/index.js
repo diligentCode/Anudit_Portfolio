@@ -217,3 +217,229 @@ projectCards.forEach((card) => {
     card.style.setProperty("--mouse-y", `50%`);
   });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const wrapper = document.querySelector(".exp-timeline-wrapper");
+  const svgTrack = document.querySelector(".exp-svg-track");
+  const activePath = document.querySelector(".exp-path-active");
+  const bgPath = document.querySelector(".exp-path-bg");
+  const cards = document.querySelectorAll(".exp-card-wrapper");
+  const liveSpark = document.getElementById("exp-live-spark");
+
+  if (!wrapper || !svgTrack || !activePath || !bgPath) return;
+
+  const desktopTriggers = [0.08, 0.5, 0.92];
+
+  function initTimelineStructure() {
+    const isMobile = window.innerWidth < 900;
+
+    if (isMobile) {
+      const totalWrapperHeight = wrapper.offsetHeight;
+      svgTrack.setAttribute("viewBox", `0 0 80 ${totalWrapperHeight}`);
+
+      const mobileD = `M 40 0 L 40 ${totalWrapperHeight}`;
+      activePath.setAttribute("d", mobileD);
+      bgPath.setAttribute("d", mobileD);
+
+      cards.forEach((card) => {
+        const cardTop = card.offsetTop;
+        const triggerRatio = Math.max(
+          0.01,
+          Math.min(0.96, (cardTop + 30) / totalWrapperHeight),
+        );
+        card.setAttribute("data-trigger", triggerRatio);
+      });
+    } else {
+      svgTrack.setAttribute("viewBox", "0 0 1000 1350");
+
+      const desktopD =
+        "M 500 0 C 200 300, 200 500, 500 675 C 800 850, 800 1050, 500 1350";
+
+      activePath.setAttribute("d", desktopD);
+      bgPath.setAttribute("d", desktopD);
+
+      cards.forEach((card, index) => {
+        if (index < desktopTriggers.length) {
+          card.setAttribute("data-trigger", desktopTriggers[index]);
+          card.style.top = `${index * 440 + 40}px`;
+        }
+      });
+    }
+
+    const pathTotalLength = activePath.getTotalLength();
+    activePath.style.strokeDasharray = pathTotalLength;
+    activePath.style.strokeDashoffset = pathTotalLength;
+
+    buildTimelineNodes(pathTotalLength);
+    scrubTimelineProgress();
+  }
+
+  function buildTimelineNodes(totalLength) {
+    svgTrack
+      .querySelectorAll(".exp-dynamic-dot")
+      .forEach((node) => node.remove());
+
+    cards.forEach((card) => {
+      const triggerPercent = parseFloat(card.getAttribute("data-trigger"));
+
+      const coordPoint = activePath.getPointAtLength(
+        triggerPercent * totalLength,
+      );
+
+      const gGroup = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "g",
+      );
+
+      gGroup.setAttribute("class", "exp-dynamic-dot");
+      gGroup.setAttribute("data-trigger", triggerPercent);
+
+      const haloCircle = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle",
+      );
+
+      haloCircle.setAttribute("cx", coordPoint.x);
+      haloCircle.setAttribute("cy", coordPoint.y);
+      haloCircle.setAttribute("r", "13");
+      haloCircle.setAttribute("class", "dot-halo");
+
+      const coreCircle = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "circle",
+      );
+
+      coreCircle.setAttribute("cx", coordPoint.x);
+      coreCircle.setAttribute("cy", coordPoint.y);
+      coreCircle.setAttribute("r", "5");
+      coreCircle.setAttribute("class", "dot-core");
+
+      gGroup.appendChild(haloCircle);
+      gGroup.appendChild(coreCircle);
+
+      svgTrack.appendChild(gGroup);
+    });
+  }
+
+  function scrubTimelineProgress() {
+    const sectionElement = document.querySelector(".experience-section");
+    if (!sectionElement) return;
+
+    const sectionBounding = sectionElement.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+
+    const interpolationStart =
+      window.pageYOffset + sectionBounding.top - viewportHeight * 0.45;
+
+    const interpolationEnd =
+      window.pageYOffset +
+      sectionBounding.top +
+      sectionBounding.height -
+      viewportHeight * 0.75;
+
+    const scrollCursor = window.pageYOffset;
+
+    let currentProgress =
+      (scrollCursor - interpolationStart) /
+      (interpolationEnd - interpolationStart);
+
+    currentProgress = Math.max(0, Math.min(1, currentProgress));
+
+    const totalPathLength = activePath.getTotalLength();
+    const tracePixelDistance = currentProgress * totalPathLength;
+
+    activePath.style.strokeDashoffset = totalPathLength - tracePixelDistance;
+
+    if (currentProgress <= 0.002) {
+      liveSpark.style.opacity = "0";
+    } else {
+      liveSpark.style.opacity = "1";
+
+      const sparkPoint = activePath.getPointAtLength(tracePixelDistance);
+
+      liveSpark.setAttribute(
+        "transform",
+        `translate(${sparkPoint.x}, ${sparkPoint.y})`,
+      );
+    }
+
+    cards.forEach((card) => {
+      const activationTrigger = parseFloat(card.getAttribute("data-trigger"));
+
+      if (currentProgress >= activationTrigger) {
+        card.classList.add("active-node");
+      } else {
+        card.classList.remove("active-node");
+      }
+    });
+
+    svgTrack.querySelectorAll(".exp-dynamic-dot").forEach((dot) => {
+      const dotTrigger = parseFloat(dot.getAttribute("data-trigger"));
+
+      if (currentProgress >= dotTrigger) {
+        dot.classList.add("illuminated");
+      } else {
+        dot.classList.remove("illuminated");
+      }
+    });
+  }
+
+  cards.forEach((wrapperNode) => {
+    const structuralCard = wrapperNode.querySelector(".exp-card");
+    const localizedGlow = wrapperNode.querySelector(".card-inner-glow");
+
+    if (!structuralCard || !localizedGlow) return;
+
+    structuralCard.addEventListener("mousemove", (event) => {
+      const rectBox = structuralCard.getBoundingClientRect();
+
+      const pointerX = event.clientX - rectBox.left;
+      const pointerY = event.clientY - rectBox.top;
+
+      localizedGlow.style.left = `${pointerX}px`;
+      localizedGlow.style.top = `${pointerY}px`;
+      localizedGlow.style.opacity = "1";
+
+      const centerOffsetX = rectBox.width / 2;
+      const centerOffsetY = rectBox.height / 2;
+
+      const degreeTiltX = (centerOffsetY - pointerY) / 14;
+      const degreeTiltY = (pointerX - centerOffsetX) / 14;
+
+      structuralCard.style.transform = `perspective(1000px) rotateX(${degreeTiltX}deg) rotateY(${degreeTiltY}deg) scale3d(1.015, 1.015, 1.015)`;
+    });
+
+    structuralCard.addEventListener("mouseleave", () => {
+      localizedGlow.style.opacity = "0";
+
+      structuralCard.style.transform =
+        "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+    });
+
+    structuralCard.addEventListener("mouseenter", () => {
+      const globalCursorRing = document.querySelector(".cursor-ring");
+
+      if (globalCursorRing) {
+        globalCursorRing.classList.add("active");
+      }
+    });
+
+    structuralCard.addEventListener("mouseleave", () => {
+      const globalCursorRing = document.querySelector(".cursor-ring");
+
+      if (globalCursorRing) {
+        globalCursorRing.classList.remove("active");
+      }
+    });
+  });
+
+  window.addEventListener("scroll", scrubTimelineProgress, {
+    passive: true,
+  });
+
+  window.addEventListener("resize", initTimelineStructure);
+
+  initTimelineStructure();
+
+  setTimeout(initTimelineStructure, 600);
+});
