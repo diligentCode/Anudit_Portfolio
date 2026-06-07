@@ -99,18 +99,15 @@ let currentY = 0;
 let mouseX = 0;
 let mouseY = 0;
 
-// Parallax target for profile
 const profile = document.querySelector(".profile-container");
 
 document.addEventListener("mousemove", (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
 
-  // Snap inner dot instantly to mouse
   cursorDot.style.left = mouseX + "px";
   cursorDot.style.top = mouseY + "px";
 
-  // Subtle Parallax effect calculation for the profile picture
   if (profile) {
     const xVal = (mouseX / window.innerWidth - 0.5) * 30; // Moves max 15px
     const yVal = (mouseY / window.innerHeight - 0.5) * 30;
@@ -130,3 +127,93 @@ function animate() {
 }
 
 animate();
+
+// Shuffle the carddsssss
+const cardSec = document.querySelector(".skill-card-section");
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    if (entries[0].isIntersecting) {
+      cardSec.classList.add("active");
+    } else {
+      cardSec.classList.remove("active");
+    }
+  },
+  {
+    threshold: 0.4,
+  },
+);
+
+observer.observe(cardSec);
+
+//Some transition for headings
+const headings = document.querySelectorAll("h1");
+
+headings.forEach((heading) => {
+  const originalText = heading.textContent;
+
+  heading.textContent = "";
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry.isIntersecting) return;
+
+      let i = 0;
+
+      const interval = setInterval(() => {
+        heading.textContent += originalText[i];
+
+        i++;
+
+        if (i >= originalText.length) {
+          clearInterval(interval);
+        }
+      }, 200);
+
+      observer.unobserve(heading);
+    },
+    {
+      threshold: 1,
+    },
+  );
+
+  observer.observe(heading);
+});
+
+const projectCards = document.querySelectorAll(".project-card");
+const projectLinks = document.querySelectorAll(".project-link");
+const globalRing = document.querySelector(".cursor-ring");
+
+// Connect all custom portfolio links directly to your custom expandable cursor ring
+projectLinks.forEach((link) => {
+  link.addEventListener("mouseenter", () => {
+    if (globalRing) globalRing.classList.add("active");
+  });
+  link.addEventListener("mouseleave", () => {
+    if (globalRing) globalRing.classList.remove("active");
+  });
+});
+
+// Dynamic Card Tracking Calculations
+projectCards.forEach((card) => {
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    card.style.setProperty("--mouse-x", `${(x / rect.width) * 100}%`);
+    card.style.setProperty("--mouse-y", `${(y / rect.height) * 100}%`);
+
+    const tiltX = (rect.height / 2 - y) * 0.035;
+    const tiltY = (x - rect.width / 2) * 0.035;
+
+    card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-4px)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+    card.style.setProperty("--mouse-x", `50%`);
+    card.style.setProperty("--mouse-y", `50%`);
+  });
+});
