@@ -14,7 +14,7 @@
     <script src="index.js" defer></script>
   </head>
   <body class="loading">
-    <section class="home-section">
+    <section class="home-section" id="home">
       <div class="video-overlay"></div>
       <video autoplay muted loop playsinline id="bg">
         <source src="assets/bg.mp4" type="video/mp4" />
@@ -22,13 +22,29 @@
       <nav class="nav-tabs">
         <p class="aj-logo">AJ</p>
         <div class="tabs">
-          <button class="home">Home</button>
-          <button class="skills">Skills</button>
-          <button class="projects">Projects</button>
-          <button class="Experience">Experience</button>
-          <button class="contact">Contact</button>
+          <button onclick="location.href = '#home'" class="home">Home</button>
+          <button onclick="location.href = '#skills-section'" class="skills">
+            Skills
+          </button>
+          <button onclick="location.href = '#projects-anchor'" class="projects">
+            Projects
+          </button>
+          <button onclick="location.href = '#experience'" class="Experience">
+            Experience
+          </button>
+          <button onclick="location.href = '#footer'" class="contact">
+            Contact
+          </button>
         </div>
-        <button class="hire">Hire Me</button>
+        <button
+          onclick="
+            window.location.href =
+              'mailto:anuditjangid@gmail.com?subject=Hiring'
+          "
+          class="hire"
+        >
+          Hire Me
+        </button>
       </nav>
 
       <div class="profile-container">
@@ -62,7 +78,14 @@
             </svg>
             <p>Email</p>
           </button>
-          <button class="linkedin">
+          <button
+            onclick="
+              window.open(
+                'https://www.linkedin.com/in/anudit-jangid-b0822a339/,_blank',
+              )
+            "
+            class="linkedin"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -74,7 +97,10 @@
             </svg>
             <p>Linkedin</p>
           </button>
-          <button class="github">
+          <button
+            onclick="window.open('https://github.com/diligentCode,-blank')"
+            class="github"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -99,10 +125,18 @@
             <p>Phone</p>
           </button>
         </div>
-        <button class="connect">Let's Talk</button>
+        <button
+          onclick="
+            window.location.href =
+              'mailto:anuditjangid@gmail.com?subject=Hiring'
+          "
+          class="connect"
+        >
+          Let's Talk
+        </button>
       </div>
     </section>
-    <section class="skills-section">
+    <section class="skills-section" id="skills-section">
       <h1>Skills</h1>
 
       <div class="floating-skills">
@@ -262,7 +296,7 @@
               </div>
               <div class="project-actions">
                 <a
-                  href="https://lnkd.in/gzc6Yv9q"
+                  href="https://diligentcode.github.io/Weatherz/"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="project-link primary-action"
@@ -282,7 +316,7 @@
                   </svg>
                 </a>
                 <a
-                  href="https://lnkd.in/g85xKTrT"
+                  href="https://github.com/diligentCode/Weatherz"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="project-link secondary-action"
@@ -329,7 +363,7 @@
               </div>
               <div class="project-actions">
                 <a
-                  href="https://lnkd.in/gkRPdcSt"
+                  href="https://diligentcode.github.io/Battleship/"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="project-link primary-action"
@@ -349,7 +383,7 @@
                   </svg>
                 </a>
                 <a
-                  href="https://lnkd.in/g-MVEs6w"
+                  href="https://github.com/diligentCode/Battleship"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="project-link secondary-action"
@@ -399,7 +433,7 @@
               </div>
               <div class="project-actions">
                 <a
-                  href="https://lnkd.in/gd4i2CjB"
+                  href="https://diligentcode.github.io/Todo/"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="project-link primary-action"
@@ -419,7 +453,7 @@
                   </svg>
                 </a>
                 <a
-                  href="https://lnkd.in/gAeteqZH"
+                  href="https://github.com/diligentCode/Todo"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="project-link secondary-action"
@@ -644,7 +678,7 @@
     </section>
 
     <div class="footer-transition-glow"></div>
-    <footer class="contact-footer">
+    <footer class="contact-footer" id="footer">
       <div class="footer-grid-bg"></div>
       <div class="footer-content-wrapper">
         <div class="footer-brand">
@@ -666,8 +700,12 @@
           <div class="footer-nav-col">
             <h4>Connect</h4>
             <a href="#" class="email-btn">Email Me</a>
-            <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
-            <a href="https://github.com/" target="_blank">GitHub</a>
+            <a
+              href="https://www.linkedin.com/in/anudit-jangid-b0822a339/"
+              target="_blank"
+              >LinkedIn</a
+            >
+            <a href="https://github.com/diligentCode" target="_blank">GitHub</a>
           </div>
         </div>
       </div>
